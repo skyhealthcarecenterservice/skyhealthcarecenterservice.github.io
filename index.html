@@ -107,6 +107,29 @@
         }
     </script>
 
+    <script>
+        // ==========================================
+        // SMART SCALING (Safe for all devices)
+        // ==========================================
+        (function() {
+            const isWindows = navigator.platform.indexOf('Win') > -1;
+            
+            // Check pixel ratio. 
+            // 1.0 = Standard (or High-Res screen forced to 100% -> Tiny text)
+            // >1.0 = High DPI / OS Scaling Active (Already zoomed by Windows -> Normal text)
+            const pixelRatio = window.devicePixelRatio;
+
+            // Only boost size if it's Windows AND the user hasn't scaled up their OS yet.
+            if (isWindows && pixelRatio <= 1) {
+                document.documentElement.style.fontSize = '19px'; // Boost to ~120%
+            } else {
+                document.documentElement.style.fontSize = '16px'; // Standard for everyone else
+            }
+        })();
+
+        // To check in console: console.log("OS:", navigator.platform, "Ratio:", window.devicePixelRatio)
+    </script>
+
     <style>
         /* Base */
         html, body {
@@ -599,6 +622,74 @@
         </div>
     </section>
 
+    <section id="md-desk" class="pb-16 md:pb-24 -mt-12 md:-mt-24 bg-stone-50 dark:bg-dark-bg relative overflow-hidden z-10"> 
+        
+        <div class="container mx-auto px-6 relative z-10">
+            
+            <div class="hidden lg:flex flex-col items-center justify-center mb-8 relative z-20 opacity-60">
+                <div class="h-12 w-px bg-gradient-to-b from-stone-300 dark:from-white/10 to-velvet-rose"></div>
+                <div class="w-2 h-2 rounded-full bg-velvet-rose shadow-glow"></div>
+                <div class="h-8 w-px bg-gradient-to-b from-velvet-rose to-transparent"></div>
+            </div>
+
+            <div class="bg-gradient-to-br from-stone-900 to-velvet-royal rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl relative border border-white/10">
+                <div class="absolute inset-0 bg-noise opacity-5"></div>
+                
+                <div class="absolute -left-20 -bottom-20 text-[6rem] md:text-[10rem] font-serif text-white/5 pointer-events-none select-none whitespace-nowrap">THE MATRIARCH</div>
+                
+                <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-velvet-rose/10 rounded-full blur-[100px] pointer-events-none mix-blend-screen"></div>
+
+                <div class="flex flex-col lg:flex-row-reverse"> <div class="lg:w-2/5 relative h-[400px] md:h-[500px] lg:h-auto select-none group overflow-hidden">
+                        <div class="protection-layer"></div>
+                        
+                        <img src="assets/director/managing_director.jpeg" 
+                             class="absolute inset-0 w-full h-full object-cover protected-image transition-transform duration-[3s] group-hover:scale-105" 
+                             alt="Managing Director"
+                             draggable="false"
+                             onerror="this.src='https://placehold.co/800x1000/2a2a2a/E5B8B7?text=Managing+Director'">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-t from-stone-900 via-transparent to-transparent opacity-80 lg:hidden pointer-events-none"></div>
+                    </div>
+
+                    <div class="lg:w-3/5 p-8 md:p-16 text-white flex flex-col justify-center text-right lg:items-end">
+                        
+                        <div class="flex items-center gap-4 mb-6 justify-end">
+                            <span class="text-velvet-rose font-bold uppercase tracking-[0.2em] text-xs">Prabandh Nirdeshak</span>
+                            <span class="h-px w-12 bg-velvet-rose"></span>
+                        </div>
+
+                        <h2 class="font-serif text-3xl md:text-5xl mb-2">Mrs. Santosh Devi</h2>
+                        <p class="text-velvet-rose/90 font-serif italic text-lg md:text-xl mb-8">Managing Director & The Guiding Light</p>
+
+                        <div class="space-y-6 text-stone-300 font-light leading-relaxed mb-10 text-sm md:text-base lg:pl-16">
+                            <p>
+                                "While expertise heals the body, it is <strong class="text-white">a mother's care</strong> that heals the spirit. Sky Healthcare stands on the foundation of family values, ensuring that no patient ever feels alone in their journey."
+                            </p>
+                            <p>
+                                With years of wisdom and a heart dedicated to service, she ensures the organization remains rooted in empathy, guiding us to treat every patient like our own <strong class="text-white">family member</strong>.
+                            </p>
+                        </div>
+
+                        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-0 w-full">
+                            
+                            <div class="flex gap-2 order-2 md:order-1 justify-end md:justify-start w-full md:w-auto">
+                                 <p class="font-signature text-3xl md:text-4xl text-velvet-rose opacity-80">Santosh Devi</p>
+                            </div>
+                            
+                            <div class="flex gap-4 order-1 md:order-2 justify-end w-full md:w-auto">
+                                 <div class="flex items-center gap-2 px-5 py-2 rounded-full border border-velvet-rose/30 bg-velvet-rose/10 backdrop-blur-md shadow-glow hover:bg-velvet-rose/20 transition-colors cursor-default">
+                                    <i data-lucide="heart" class="w-4 h-4 text-velvet-rose fill-current animate-pulse-slow"></i>
+                                    <span class="text-[0.6rem] md:text-xs font-bold uppercase tracking-widest text-velvet-rose">Heart of Sky</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="team" class="py-24 md:py-32 bg-stone-100 dark:bg-black relative bg-pattern">
         <div class="absolute inset-0 bg-stone-100/90 dark:bg-black/90 pointer-events-none"></div>
         
@@ -619,19 +710,19 @@
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
-                
-                <div class="group cursor-pointer">
+
+                <div class="group cursor-pointer mt-0 sm:mt-12 lg:mt-0">
                     <div class="relative bg-white dark:bg-dark-surface p-2 pb-8 shadow-floating transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl border border-stone-200 dark:border-white/5">
-                        <div class="aspect-[3/4] overflow-hidden bg-stone-200 relative mb-4">
+                         <div class="aspect-[3/4] overflow-hidden bg-stone-200 relative mb-4">
                              <div class="protection-layer"></div>
-                             <div class="absolute top-2 right-2 z-30 bg-white/90 dark:bg-dark-surface/90 p-1.5 rounded-full shadow-sm border border-velvet-gold/30 backdrop-blur-sm">
+                            <div class="absolute top-2 right-2 z-30 bg-white/90 dark:bg-dark-surface/90 p-1.5 rounded-full shadow-sm border border-velvet-gold/30 backdrop-blur-sm">
                                 <i data-lucide="award" class="w-4 h-4 text-velvet-gold"></i>
                             </div>
-                            <img src="assets/team/Swati_Nursing_Officer.jpeg" class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-110 team-member-img protected-image" alt="Dr. Swati" onerror="this.src='https://placehold.co/300x400/1e1e1e/FFF?text=Doctor'">
+                            <img src="assets/team/Dr_Harshit_Tayal-MBBS-MS_General_Surgery.jpeg" class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-110 team-member-img protected-image" alt="Suman Rawat" onerror="this.src='https://placehold.co/300x400/1e1e1e/FFF?text=Team'">
                         </div>
                         <div class="text-center relative z-30 px-2">
-                            <h3 class="font-serif text-xl text-stone-900 dark:text-white mb-1">Swati</h3>
-                            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-velvet-gold font-bold">Nursing Officer</p>
+                            <h3 class="font-serif text-xl text-stone-900 dark:text-white mb-1">Dr. Harshit Tayal</h3>
+                            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-velvet-gold font-bold">MBBS, MS General Surgery</p>
                         </div>
                     </div>
                 </div>
@@ -652,7 +743,87 @@
                     </div>
                 </div>
 
-                 <div class="group cursor-pointer">
+                <div class="group cursor-pointer">
+                    <div class="relative bg-white dark:bg-dark-surface p-2 pb-8 shadow-floating transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl border border-stone-200 dark:border-white/5">
+                        <div class="aspect-[3/4] overflow-hidden bg-stone-200 relative mb-4">
+                             <div class="protection-layer"></div>
+                            <div class="absolute top-2 right-2 z-30 bg-white/90 dark:bg-dark-surface/90 p-1.5 rounded-full shadow-sm border border-velvet-gold/30 backdrop-blur-sm">
+                                <i data-lucide="award" class="w-4 h-4 text-velvet-gold"></i>
+                            </div>
+                            <img src="assets/team/Deepa_Negi_Nursing_Officer.jpeg" class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-110 team-member-img protected-image" alt="Sangeeta Thapa" onerror="this.src='https://placehold.co/300x400/1e1e1e/FFF?text=Yoga'">
+                        </div>
+                        <div class="text-center relative z-30 px-2">
+                            <h3 class="font-serif text-xl text-stone-900 dark:text-white mb-1">Deepa Negi</h3>
+                            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-velvet-gold font-bold">Nursing Officer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group cursor-pointer mt-0 sm:mt-12 lg:mt-0">
+                    <div class="relative bg-white dark:bg-dark-surface p-2 pb-8 shadow-floating transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl border border-stone-200 dark:border-white/5">
+                         <div class="aspect-[3/4] overflow-hidden bg-stone-200 relative mb-4">
+                             <div class="protection-layer"></div>
+                            <div class="absolute top-2 right-2 z-30 bg-white/90 dark:bg-dark-surface/90 p-1.5 rounded-full shadow-sm border border-velvet-gold/30 backdrop-blur-sm">
+                                <i data-lucide="award" class="w-4 h-4 text-velvet-gold"></i>
+                            </div>
+                            <img src="assets/team/Sarayat_Ali_Team_Member.jpeg" class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-110 team-member-img protected-image" alt="Suman Rawat" onerror="this.src='https://placehold.co/300x400/1e1e1e/FFF?text=Team'">
+                        </div>
+                        <div class="text-center relative z-30 px-2">
+                            <h3 class="font-serif text-xl text-stone-900 dark:text-white mb-1">Sarayat Ali</h3>
+                            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-velvet-gold font-bold">Pharmacist</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="group cursor-pointer">
+                    <div class="relative bg-white dark:bg-dark-surface p-2 pb-8 shadow-floating transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl border border-stone-200 dark:border-white/5">
+                        <div class="aspect-[3/4] overflow-hidden bg-stone-200 relative mb-4">
+                             <div class="protection-layer"></div>
+                             <div class="absolute top-2 right-2 z-30 bg-white/90 dark:bg-dark-surface/90 p-1.5 rounded-full shadow-sm border border-velvet-gold/30 backdrop-blur-sm">
+                                <i data-lucide="award" class="w-4 h-4 text-velvet-gold"></i>
+                            </div>
+                            <img src="assets/team/Swati_Panwar_Nursing_Officer.jpeg" class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-110 team-member-img protected-image" alt="Dr. Swati" onerror="this.src='https://placehold.co/300x400/1e1e1e/FFF?text=Doctor'">
+                        </div>
+                        <div class="text-center relative z-30 px-2">
+                            <h3 class="font-serif text-xl text-stone-900 dark:text-white mb-1">Swati Panwar</h3>
+                            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-velvet-gold font-bold">Nursing Officer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group cursor-pointer mt-0 sm:mt-12 lg:mt-0">
+                    <div class="relative bg-white dark:bg-dark-surface p-2 pb-8 shadow-floating transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl border border-stone-200 dark:border-white/5">
+                         <div class="aspect-[3/4] overflow-hidden bg-stone-200 relative mb-4">
+                             <div class="protection-layer"></div>
+                            <div class="absolute top-2 right-2 z-30 bg-white/90 dark:bg-dark-surface/90 p-1.5 rounded-full shadow-sm border border-velvet-gold/30 backdrop-blur-sm">
+                                <i data-lucide="award" class="w-4 h-4 text-velvet-gold"></i>
+                            </div>
+                            <img src="assets/team/Sumit_Kumar_Lab_Techcian.jpeg" class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-110 team-member-img protected-image" alt="Suman Rawat" onerror="this.src='https://placehold.co/300x400/1e1e1e/FFF?text=Team'">
+                        </div>
+                        <div class="text-center relative z-30 px-2">
+                            <h3 class="font-serif text-xl text-stone-900 dark:text-white mb-1">Sumit Kumar</h3>
+                            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-velvet-gold font-bold">Lab Technician</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group cursor-pointer mt-0 sm:mt-12 lg:mt-0">
+                    <div class="relative bg-white dark:bg-dark-surface p-2 pb-8 shadow-floating transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl border border-stone-200 dark:border-white/5">
+                         <div class="aspect-[3/4] overflow-hidden bg-stone-200 relative mb-4">
+                             <div class="protection-layer"></div>
+                            <div class="absolute top-2 right-2 z-30 bg-white/90 dark:bg-dark-surface/90 p-1.5 rounded-full shadow-sm border border-velvet-gold/30 backdrop-blur-sm">
+                                <i data-lucide="award" class="w-4 h-4 text-velvet-gold"></i>
+                            </div>
+                            <img src="assets/team/Suman_Rawat_Team_Member.jpeg" class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-110 team-member-img protected-image" alt="Suman Rawat" onerror="this.src='https://placehold.co/300x400/1e1e1e/FFF?text=Team'">
+                        </div>
+                        <div class="text-center relative z-30 px-2">
+                            <h3 class="font-serif text-xl text-stone-900 dark:text-white mb-1">Suman Rawat</h3>
+                            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-velvet-gold font-bold">Team Member</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group cursor-pointer">
                     <div class="relative bg-white dark:bg-dark-surface p-2 pb-8 shadow-floating transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl border border-stone-200 dark:border-white/5">
                         <div class="aspect-[3/4] overflow-hidden bg-stone-200 relative mb-4">
                              <div class="protection-layer"></div>
@@ -675,11 +846,11 @@
                             <div class="absolute top-2 right-2 z-30 bg-white/90 dark:bg-dark-surface/90 p-1.5 rounded-full shadow-sm border border-velvet-gold/30 backdrop-blur-sm">
                                 <i data-lucide="award" class="w-4 h-4 text-velvet-gold"></i>
                             </div>
-                            <img src="assets/team/Deepa_Negi_Nursing_Officer.jpeg" class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-110 team-member-img protected-image" alt="Sangeeta Thapa" onerror="this.src='https://placehold.co/300x400/1e1e1e/FFF?text=Yoga'">
+                            <img src="assets/team/Yogacharya_Uma_Shankar_Kala_Yoga_Educator.jpeg" class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-110 team-member-img protected-image" alt="Sangeeta Thapa" onerror="this.src='https://placehold.co/300x400/1e1e1e/FFF?text=Yoga'">
                         </div>
                         <div class="text-center relative z-30 px-2">
-                            <h3 class="font-serif text-xl text-stone-900 dark:text-white mb-1">Deepa Negi</h3>
-                            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-velvet-gold font-bold">Nursing Officer</p>
+                            <h3 class="font-serif text-xl text-stone-900 dark:text-white mb-1">Yogacharya Uma Shankar Kala</h3>
+                            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-velvet-gold font-bold">Yoga Educator</p>
                         </div>
                     </div>
                 </div>
@@ -723,75 +894,11 @@
                             <div class="absolute top-2 right-2 z-30 bg-white/90 dark:bg-dark-surface/90 p-1.5 rounded-full shadow-sm border border-velvet-gold/30 backdrop-blur-sm">
                                 <i data-lucide="award" class="w-4 h-4 text-velvet-gold"></i>
                             </div>
-                            <img src="assets/team/Suman_Rawat_Team_Member.jpeg" class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-110 team-member-img protected-image" alt="Suman Rawat" onerror="this.src='https://placehold.co/300x400/1e1e1e/FFF?text=Team'">
-                        </div>
-                        <div class="text-center relative z-30 px-2">
-                            <h3 class="font-serif text-xl text-stone-900 dark:text-white mb-1">Suman Rawat</h3>
-                            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-velvet-gold font-bold">Team Member</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group cursor-pointer mt-0 sm:mt-12 lg:mt-0">
-                    <div class="relative bg-white dark:bg-dark-surface p-2 pb-8 shadow-floating transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl border border-stone-200 dark:border-white/5">
-                         <div class="aspect-[3/4] overflow-hidden bg-stone-200 relative mb-4">
-                             <div class="protection-layer"></div>
-                            <div class="absolute top-2 right-2 z-30 bg-white/90 dark:bg-dark-surface/90 p-1.5 rounded-full shadow-sm border border-velvet-gold/30 backdrop-blur-sm">
-                                <i data-lucide="award" class="w-4 h-4 text-velvet-gold"></i>
-                            </div>
-                            <img src="assets/team/Sumit_Kumar_Lab_Techcian.jpeg" class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-110 team-member-img protected-image" alt="Suman Rawat" onerror="this.src='https://placehold.co/300x400/1e1e1e/FFF?text=Team'">
-                        </div>
-                        <div class="text-center relative z-30 px-2">
-                            <h3 class="font-serif text-xl text-stone-900 dark:text-white mb-1">Sumit Kumar</h3>
-                            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-velvet-gold font-bold">Lab Technician</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group cursor-pointer mt-0 sm:mt-12 lg:mt-0">
-                    <div class="relative bg-white dark:bg-dark-surface p-2 pb-8 shadow-floating transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl border border-stone-200 dark:border-white/5">
-                         <div class="aspect-[3/4] overflow-hidden bg-stone-200 relative mb-4">
-                             <div class="protection-layer"></div>
-                            <div class="absolute top-2 right-2 z-30 bg-white/90 dark:bg-dark-surface/90 p-1.5 rounded-full shadow-sm border border-velvet-gold/30 backdrop-blur-sm">
-                                <i data-lucide="award" class="w-4 h-4 text-velvet-gold"></i>
-                            </div>
-                            <img src="assets/team/Dr_Harshit_Tayal-MBBS-MS_General_Surgery.jpeg" class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-110 team-member-img protected-image" alt="Suman Rawat" onerror="this.src='https://placehold.co/300x400/1e1e1e/FFF?text=Team'">
-                        </div>
-                        <div class="text-center relative z-30 px-2">
-                            <h3 class="font-serif text-xl text-stone-900 dark:text-white mb-1">Dr. Harshit Tayal</h3>
-                            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-velvet-gold font-bold">MBBS, MS General Surgery</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group cursor-pointer mt-0 sm:mt-12 lg:mt-0">
-                    <div class="relative bg-white dark:bg-dark-surface p-2 pb-8 shadow-floating transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl border border-stone-200 dark:border-white/5">
-                         <div class="aspect-[3/4] overflow-hidden bg-stone-200 relative mb-4">
-                             <div class="protection-layer"></div>
-                            <div class="absolute top-2 right-2 z-30 bg-white/90 dark:bg-dark-surface/90 p-1.5 rounded-full shadow-sm border border-velvet-gold/30 backdrop-blur-sm">
-                                <i data-lucide="award" class="w-4 h-4 text-velvet-gold"></i>
-                            </div>
                             <img src="assets/team/Sanjay_Gutpa_Team_Member.jpeg" class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-110 team-member-img protected-image" alt="Suman Rawat" onerror="this.src='https://placehold.co/300x400/1e1e1e/FFF?text=Team'">
                         </div>
                         <div class="text-center relative z-30 px-2">
                             <h3 class="font-serif text-xl text-stone-900 dark:text-white mb-1">Sanjay Gupta</h3>
                             <p class="text-[0.65rem] uppercase tracking-[0.2em] text-velvet-gold font-bold">Team Member</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group cursor-pointer mt-0 sm:mt-12 lg:mt-0">
-                    <div class="relative bg-white dark:bg-dark-surface p-2 pb-8 shadow-floating transform transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-2xl border border-stone-200 dark:border-white/5">
-                         <div class="aspect-[3/4] overflow-hidden bg-stone-200 relative mb-4">
-                             <div class="protection-layer"></div>
-                            <div class="absolute top-2 right-2 z-30 bg-white/90 dark:bg-dark-surface/90 p-1.5 rounded-full shadow-sm border border-velvet-gold/30 backdrop-blur-sm">
-                                <i data-lucide="award" class="w-4 h-4 text-velvet-gold"></i>
-                            </div>
-                            <img src="assets/team/Sarayat_Ali_Team_Member.jpeg" class="w-full h-full object-cover transition-all duration-1000 transform group-hover:scale-110 team-member-img protected-image" alt="Suman Rawat" onerror="this.src='https://placehold.co/300x400/1e1e1e/FFF?text=Team'">
-                        </div>
-                        <div class="text-center relative z-30 px-2">
-                            <h3 class="font-serif text-xl text-stone-900 dark:text-white mb-1">Sarayat Ali</h3>
-                            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-velvet-gold font-bold">Pharmacist</p>
                         </div>
                     </div>
                 </div>
@@ -1043,6 +1150,437 @@
         </div>
     </section>
 
+    <section id="pricing" class="py-24 bg-stone-50 dark:bg-dark-bg relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-velvet-gold/50 to-transparent"></div>
+        <div class="absolute -left-20 top-40 w-96 h-96 bg-velvet-sage/10 rounded-full blur-3xl pointer-events-none mix-blend-multiply dark:mix-blend-screen"></div>
+        <div class="absolute -right-20 bottom-40 w-96 h-96 bg-velvet-rose/10 rounded-full blur-3xl pointer-events-none mix-blend-multiply dark:mix-blend-screen"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-velvet-gold text-xs font-bold uppercase tracking-[0.2em] mb-4 block">Transparent Rates</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-stone-900 dark:text-white mb-6">Equipment Rental Price List</h2>
+                <p class="text-stone-500 dark:text-stone-400 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+                    High-quality hospital-grade equipment delivered to your doorstep. <br>
+                    <span class="text-velvet-gold italic">Daily, Weekly, and Monthly plans available.</span>
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 perspective-1000">
+
+                <div class="tilt-card spotlight-card bg-white dark:bg-dark-surface p-6 rounded-[2rem] shadow-soft hover:shadow-floating border border-stone-100 dark:border-white/5 relative group h-full">
+                    <div class="flex items-center gap-4 mb-6 border-b border-stone-100 dark:border-white/5 pb-4">
+                        <div class="w-12 h-12 bg-stone-50 dark:bg-white/5 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform text-velvet-gold">
+                            <i data-lucide="bed" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif text-xl text-stone-900 dark:text-white">Hospital Beds</h3>
+                    </div>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">Manual Bed</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹800 – ₹1,200<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">Semi-Electric</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹2,500 – ₹3,500<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">Fully Electric</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹4,500 – ₹7,000<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">Air Mattress</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹1,000 – ₹1,500<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tilt-card spotlight-card bg-white dark:bg-dark-surface p-6 rounded-[2rem] shadow-soft hover:shadow-floating border border-stone-100 dark:border-white/5 relative group h-full">
+                    <div class="flex items-center gap-4 mb-6 border-b border-stone-100 dark:border-white/5 pb-4">
+                        <div class="w-12 h-12 bg-stone-50 dark:bg-white/5 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform text-velvet-sage">
+                            <i data-lucide="wind" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif text-xl text-stone-900 dark:text-white">Oxygen Setup</h3>
+                    </div>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">O2 Concentrator (5L)</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹2,500 – ₹4,000<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">O2 Concentrator (10L)</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹5,000 – ₹7,000<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">Oxygen Cylinder</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹300 – ₹500<span class="block text-[0.6rem] text-stone-400 font-normal">/ day</span></span>
+                        </li>
+                         <li class="flex justify-between items-center bg-stone-50 dark:bg-white/5 p-2 rounded-lg">
+                            <span class="text-xs text-stone-500">Flow Meter & Accessories</span>
+                            <span class="text-xs font-bold text-velvet-sage uppercase tracking-wider">Included</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tilt-card spotlight-card bg-white dark:bg-dark-surface p-6 rounded-[2rem] shadow-soft hover:shadow-floating border border-stone-100 dark:border-white/5 relative group h-full">
+                    <div class="flex items-center gap-4 mb-6 border-b border-stone-100 dark:border-white/5 pb-4">
+                        <div class="w-12 h-12 bg-stone-50 dark:bg-white/5 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform text-blue-400">
+                            <i data-lucide="activity" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif text-xl text-stone-900 dark:text-white">Respiratory</h3>
+                    </div>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">CPAP Machine</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹2,500 – ₹4,000<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">BiPAP Machine</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹4,000 – ₹6,500<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">Nebulizer</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹400 – ₹700<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">Suction Machine</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹1,000 – ₹1,800<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tilt-card spotlight-card bg-white dark:bg-dark-surface p-6 rounded-[2rem] shadow-soft hover:shadow-floating border border-stone-100 dark:border-white/5 relative group h-full">
+                    <div class="flex items-center gap-4 mb-6 border-b border-stone-100 dark:border-white/5 pb-4">
+                        <div class="w-12 h-12 bg-stone-50 dark:bg-white/5 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform text-stone-700 dark:text-stone-300">
+                            <i data-lucide="armchair" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif text-xl text-stone-900 dark:text-white">Mobility</h3>
+                    </div>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">Wheelchair</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹600 – ₹1,000<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">Patient Commode</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹700 – ₹1,200<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">Walker / Aid</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹400 – ₹700<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">Head Support Chair</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹1,500<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tilt-card spotlight-card bg-white dark:bg-dark-surface p-6 rounded-[2rem] shadow-soft hover:shadow-floating border border-stone-100 dark:border-white/5 relative group h-full">
+                    <div class="flex items-center gap-4 mb-6 border-b border-stone-100 dark:border-white/5 pb-4">
+                        <div class="w-12 h-12 bg-stone-50 dark:bg-white/5 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform text-velvet-rose">
+                            <i data-lucide="heart-pulse" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif text-xl text-stone-900 dark:text-white">Cardiac & Monitors</h3>
+                    </div>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">Patient Monitor</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹3,000 – ₹5,000<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">DVT Pump</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹4,000<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                         <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">Cardiac Table</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹500<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                        <li class="flex justify-between items-start">
+                            <span class="text-stone-600 dark:text-stone-300">Pulse Oximeter</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right">₹300 – ₹500<span class="block text-[0.6rem] text-stone-400 font-normal">/ month</span></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tilt-card spotlight-card bg-velvet-royal text-white p-6 rounded-[2rem] shadow-floating relative group h-full flex flex-col justify-between overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-velvet-gold/20 rounded-full blur-2xl"></div>
+                    
+                    <div>
+                        <div class="flex items-center gap-4 mb-6 border-b border-white/10 pb-4 relative z-10">
+                            <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform text-velvet-gold">
+                                <i data-lucide="truck" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="font-serif text-xl">Delivery & Benefits</h3>
+                        </div>
+                        
+                        <div class="bg-white/5 rounded-xl p-4 mb-4 relative z-10">
+                            <p class="text-xs uppercase tracking-widest text-velvet-gold mb-2 font-bold">Delivery Charges</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-stone-300">Home Setup</span>
+                                <span class="font-bold">₹300 – ₹800</span>
+                            </div>
+                            <p class="text-[0.6rem] text-stone-400 mt-1">*One-time charge depending on location</p>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10">
+                        <p class="text-xs uppercase tracking-widest text-stone-400 mb-3 font-bold">Why Rent From Sky?</p>
+                        <ul class="space-y-2 text-sm font-light">
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-400"></i> Clean & Sanitized Equipment</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-400"></i> Quick Delivery</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-400"></i> 24/7 Technical Support</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="my-20 flex items-center justify-center gap-4 opacity-50">
+                <div class="h-px bg-gradient-to-r from-transparent via-stone-300 dark:via-white/20 to-transparent w-24 md:w-64"></div>
+                <div class="w-1.5 h-1.5 rounded-full bg-velvet-gold"></div>
+                <div class="h-px bg-gradient-to-r from-transparent via-stone-300 dark:via-white/20 to-transparent w-24 md:w-64"></div>
+            </div>
+
+            <div class="text-center mb-16">
+                <span class="text-velvet-sage text-sm font-bold uppercase tracking-[0.2em] mb-3 block">Expert Care Plans</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-stone-900 dark:text-white">Professional Services</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-6 gap-6 perspective-1000 mb-16">
+
+                <div class="lg:col-span-2 tilt-card spotlight-card bg-white dark:bg-dark-surface p-6 md:p-8 rounded-[2.5rem] shadow-soft hover:shadow-floating border border-stone-100 dark:border-white/5 relative group h-full flex flex-col">
+                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i data-lucide="user-plus" class="w-20 h-20 text-velvet-rose"></i>
+                    </div>
+                    
+                    <div class="flex items-center gap-4 mb-8 border-b border-stone-100 dark:border-white/5 pb-6 relative z-10">
+                        <div class="w-14 h-14 bg-stone-50 dark:bg-white/5 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform text-velvet-rose shadow-sm">
+                            <i data-lucide="stethoscope" class="w-7 h-7"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-serif text-2xl text-stone-900 dark:text-white leading-none mb-1">Nursing Officer</h3>
+                            <p class="text-xs uppercase tracking-widest text-stone-500 font-bold">Monthly Packages</p>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-4 text-sm relative z-10 flex-grow">
+                        <li class="flex justify-between items-start border-b border-stone-100 dark:border-white/5 pb-2">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">Basic Care</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹8k – ₹12k</span>
+                        </li>
+                        <li class="flex justify-between items-start border-b border-stone-100 dark:border-white/5 pb-2">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">Standard Care</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹12k – ₹18k</span>
+                        </li>
+                        <li class="flex justify-between items-start border-b border-stone-100 dark:border-white/5 pb-2">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">Advanced Care</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹18k – ₹24k</span>
+                        </li>
+                        <li class="flex justify-between items-start border-b border-stone-100 dark:border-white/5 pb-2">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">24×7 On-Call</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹25k – ₹35k</span>
+                        </li>
+                         <li class="flex justify-between items-center p-3 bg-velvet-rose/10 rounded-xl border border-velvet-rose/20 mt-2">
+                            <span class="text-velvet-rose font-bold flex items-center gap-2 w-1/2"><i data-lucide="home" class="w-4 h-4"></i> Stay-In</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-base text-right w-1/2">₹40k – ₹60k+</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="lg:col-span-2 tilt-card spotlight-card bg-white dark:bg-dark-surface p-6 md:p-8 rounded-[2.5rem] shadow-soft hover:shadow-floating border border-stone-100 dark:border-white/5 relative group h-full flex flex-col">
+                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i data-lucide="pill" class="w-20 h-20 text-green-500"></i>
+                    </div>
+
+                    <div class="flex items-center gap-4 mb-8 border-b border-stone-100 dark:border-white/5 pb-6 relative z-10">
+                        <div class="w-14 h-14 bg-stone-50 dark:bg-white/5 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform text-green-500 shadow-sm">
+                            <i data-lucide="cross" class="w-7 h-7"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-serif text-2xl text-stone-900 dark:text-white leading-none mb-1">Pharmacy</h3>
+                            <p class="text-xs uppercase tracking-widest text-stone-500 font-bold">Medicines & Devices</p>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-4 text-sm relative z-10 flex-grow">
+                         <li class="flex justify-between items-start border-b border-stone-100 dark:border-white/5 pb-2">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">Prescribed Meds</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">MRP (Brand)</span>
+                        </li>
+                        <li class="flex justify-between items-start border-b border-stone-100 dark:border-white/5 pb-2">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">Generic Meds</span>
+                            <span class="font-bold text-green-600 dark:text-green-400 text-right w-1/2">10% – 40% OFF</span>
+                        </li>
+                        <li class="flex justify-between items-start border-b border-stone-100 dark:border-white/5 pb-2">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">Basic Supplies</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹10 – ₹300</span>
+                        </li>
+                         <li class="flex justify-between items-start border-b border-stone-100 dark:border-white/5 pb-2">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">Wound Care</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹50 – ₹500</span>
+                        </li>
+                         <li class="flex justify-between items-start border-b border-stone-100 dark:border-white/5 pb-2">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">Medical Devices</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹300 – ₹2,500+</span>
+                        </li>
+                        <li class="flex justify-between items-center p-3 bg-green-50 dark:bg-green-900/20 rounded-xl mt-2">
+                            <span class="text-green-700 dark:text-green-300 font-bold text-xs uppercase flex gap-2"><i data-lucide="truck" class="w-4 h-4"></i> Home Delivery</span>
+                            <span class="text-xs text-stone-900 dark:text-white font-bold text-right">Free > ₹500</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="lg:col-span-2 tilt-card spotlight-card bg-white dark:bg-dark-surface p-6 md:p-8 rounded-[2.5rem] shadow-soft hover:shadow-floating border border-stone-100 dark:border-white/5 relative group h-full flex flex-col">
+                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i data-lucide="flask-conical" class="w-20 h-20 text-blue-500"></i>
+                    </div>
+
+                    <div class="flex items-center gap-4 mb-8 border-b border-stone-100 dark:border-white/5 pb-6 relative z-10">
+                        <div class="w-14 h-14 bg-stone-50 dark:bg-white/5 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform text-blue-500 shadow-sm">
+                            <i data-lucide="test-tube-2" class="w-7 h-7"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-serif text-2xl text-stone-900 dark:text-white leading-none mb-1">Lab Tech</h3>
+                            <p class="text-xs uppercase tracking-widest text-stone-500 font-bold">Home Collection</p>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-4 text-sm relative z-10 flex-grow">
+                         <li class="flex justify-between items-start border-b border-stone-100 dark:border-white/5 pb-2">
+                            <span class="text-stone-500 dark:text-stone-400 font-medium w-1/2">Home Sample Visit</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹200 – ₹500</span>
+                        </li>
+                        <li class="flex justify-between items-start border-b border-stone-100 dark:border-white/5 pb-2">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">Basic Blood Tests</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹100 – ₹400</span>
+                        </li>
+                        <li class="flex justify-between items-start border-b border-stone-100 dark:border-white/5 pb-2">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">Routine (LFT/KFT)</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹300 – ₹1.2k</span>
+                        </li>
+                         <li class="flex justify-between items-start border-b border-stone-100 dark:border-white/5 pb-2">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">Advanced Tests</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹600 – ₹2.5k</span>
+                        </li>
+                         <li class="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-xl mt-2">
+                            <span class="text-blue-600 dark:text-blue-300 font-bold text-xs uppercase w-1/2">Monthly Package</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-base text-right w-1/2">₹2k – ₹5k</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="lg:col-start-2 lg:col-span-2 tilt-card spotlight-card bg-white dark:bg-dark-surface p-6 md:p-8 rounded-[2.5rem] shadow-soft hover:shadow-floating border border-stone-100 dark:border-white/5 relative group h-full flex flex-col">
+                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i data-lucide="flower" class="w-20 h-20 text-velvet-sage"></i>
+                    </div>
+
+                    <div class="flex items-center gap-4 mb-8 border-b border-stone-100 dark:border-white/5 pb-6 relative z-10">
+                        <div class="w-14 h-14 bg-stone-50 dark:bg-white/5 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform text-velvet-sage shadow-sm">
+                            <i data-lucide="sparkles" class="w-7 h-7"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-serif text-2xl text-stone-900 dark:text-white leading-none mb-1">Yoga</h3>
+                            <p class="text-xs uppercase tracking-widest text-stone-500 font-bold">Hourly & Monthly</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 relative z-10 text-sm flex-grow">
+                        <div>
+                            <p class="text-xs font-bold text-velvet-sage mb-3 uppercase tracking-wide border-b border-stone-100 dark:border-white/5 pb-2">Hourly Sessions</p>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-stone-600 dark:text-stone-300 font-medium">Individual (1 hr)</span>
+                                <span class="font-bold text-stone-900 dark:text-white">₹400 – ₹800</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-stone-600 dark:text-stone-300 font-medium">Group (1 hr)</span>
+                                <span class="font-bold text-stone-900 dark:text-white">₹1,000 – ₹2,000</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <p class="text-xs font-bold text-velvet-sage mb-3 uppercase tracking-wide border-b border-stone-100 dark:border-white/5 pb-2 pt-2">Monthly Packages</p>
+                             <ul class="space-y-3">
+                                <li class="flex justify-between">
+                                    <span class="text-stone-600 dark:text-stone-300 w-1/2">Basic (12 sess)</span>
+                                    <span class="font-bold w-1/2 text-right">₹3k – ₹5k</span>
+                                </li>
+                                <li class="flex justify-between">
+                                    <span class="text-stone-600 dark:text-stone-300 w-1/2">Daily (Personal)</span>
+                                    <span class="font-bold w-1/2 text-right">₹8k – ₹12k</span>
+                                </li>
+                                <li class="flex justify-between p-3 bg-stone-50 dark:bg-white/5 rounded-xl border border-stone-100 dark:border-white/5">
+                                    <span class="text-stone-600 dark:text-stone-300 font-bold w-1/2">Therapeutic Yoga</span>
+                                    <span class="font-bold w-1/2 text-right text-stone-900 dark:text-white">₹10k – ₹15k</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 tilt-card spotlight-card bg-white dark:bg-dark-surface p-6 md:p-8 rounded-[2.5rem] shadow-soft hover:shadow-floating border border-stone-100 dark:border-white/5 relative group h-full flex flex-col">
+                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i data-lucide="apple" class="w-20 h-20 text-orange-400"></i>
+                    </div>
+
+                    <div class="flex items-center gap-4 mb-8 border-b border-stone-100 dark:border-white/5 pb-6 relative z-10">
+                        <div class="w-14 h-14 bg-stone-50 dark:bg-white/5 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform text-orange-400 shadow-sm">
+                            <i data-lucide="utensils" class="w-7 h-7"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-serif text-2xl text-stone-900 dark:text-white leading-none mb-1">Dietician</h3>
+                            <p class="text-xs uppercase tracking-widest text-stone-500 font-bold">Nutrition Plans</p>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-4 text-sm relative z-10 flex-grow">
+                        <li class="flex justify-between items-center border-b border-stone-100 dark:border-white/5 pb-2">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">Consultation</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹500 – ₹1,000</span>
+                        </li>
+                        <li class="flex justify-between items-center border-b border-stone-100 dark:border-white/5 pb-2">
+                            <span class="text-stone-500 dark:text-stone-400 font-medium w-1/2">Follow-up</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹300 – ₹600</span>
+                        </li>
+                        
+                        <li class="flex justify-between items-center pt-2">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">Basic Monthly</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹1.5k – ₹2.5k</span>
+                        </li>
+                        <li class="flex justify-between items-center">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">Weight Mgmt</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹4k – ₹7k</span>
+                        </li>
+                        <li class="flex justify-between items-center">
+                            <span class="text-stone-600 dark:text-stone-300 font-medium w-1/2">Therapeutic Diet</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-right w-1/2">₹5k – ₹10k</span>
+                        </li>
+                         <li class="flex justify-between items-center p-3 bg-orange-50 dark:bg-orange-900/20 rounded-xl mt-2">
+                            <span class="text-orange-600 dark:text-orange-300 font-bold text-xs uppercase w-1/2">Family Plan</span>
+                            <span class="font-bold text-stone-900 dark:text-white text-base text-right w-1/2">₹6k – ₹12k</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="text-center mb-12 max-w-2xl mx-auto">
+                <p class="text-[0.65rem] md:text-xs text-stone-400 italic">
+                    <span class="text-velvet-gold font-bold">*Note:</span> Final rates depend on patient condition, location (Dehradun), and specific care requirements. Prices subject to change.
+                </p>
+            </div>
+
+            </div>
+            
+            <div class="mt-12 text-center">
+                <a href="tel:7060733918" class="magnetic-btn inline-flex items-center gap-2 px-8 py-4 bg-stone-900 dark:bg-white text-white dark:text-stone-900 rounded-full font-bold shadow-sticker hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
+                    <span>Rent Equipment Now</span>
+                    <i data-lucide="phone" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
     <section id="camps" class="py-24 bg-stone-50 dark:bg-dark-bg relative border-t border-stone-200 dark:border-white/5">
         <div class="container mx-auto px-6 relative z-10">
             <div class="text-center mb-16">
@@ -1224,14 +1762,23 @@
                         <a href="tel:7060733918" class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-velvet-gold hover:text-stone-900 transition-all cursor-pointer group">
                             <i data-lucide="phone" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
                         </a>
-                        <a href="mailto:info@skyhealthcare.com" class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-velvet-gold hover:text-stone-900 transition-all cursor-pointer group">
+                        <a href="https://wa.me/917900951236" target="_blank" class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-velvet-gold hover:text-stone-900 transition-all cursor-pointer group">
+                            <svg role="img" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 group-hover:scale-110 transition-transform" xmlns="http://www.w3.org/2000/svg">
+                                <title>WhatsApp</title>
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.572-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                            </svg>
+                        </a>
+                        <a href="mailto:skyhealthcarecenterservice@gmail.com" class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-velvet-gold hover:text-stone-900 transition-all cursor-pointer group">
                             <i data-lucide="mail" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
                         </a>
-                        <a href="#" class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-velvet-gold hover:text-stone-900 transition-all cursor-pointer group">
+                        <a href="https://www.instagram.com/skyhealthcarecenterservice" class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-velvet-gold hover:text-stone-900 transition-all cursor-pointer group">
                             <i data-lucide="instagram" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
                         </a>
-                        <a href="#" class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-velvet-gold hover:text-stone-900 transition-all cursor-pointer group">
+                        <a href="https://www.facebook.com/share/1DdjmqxANU/" class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-velvet-gold hover:text-stone-900 transition-all cursor-pointer group">
                             <i data-lucide="facebook" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@skyhealthcarecenterservic" class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-velvet-gold hover:text-stone-900 transition-all cursor-pointer group">
+                            <i data-lucide="youtube" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
                         </a>
                     </div>
                 </div>
