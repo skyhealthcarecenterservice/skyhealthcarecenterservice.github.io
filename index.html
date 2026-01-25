@@ -6,6 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SKY Healthcare Centre Services | The Art of Healing</title>
     <meta name="description" content="Premium, compassionate healthcare in Dehradun. Directed by Ms. Deepika Kapoor.">
+        <!-- UNIVERSAL SCALING FIX -->
+        <script>
+            (function () {
+                const REFERENCE_WIDTH = 1920;
+                const MIN_ZOOM = 0.6;
+                const MAX_ZOOM = 1.0;
+
+                function applyScaling() {
+                    const viewportWidth = window.innerWidth;
+                    const viewportHeight = window.innerHeight;
+
+                    if (viewportWidth <= 1024) {
+                        document.documentElement.style.zoom = '1';
+                        document.documentElement.style.setProperty('--real-vh', viewportHeight + 'px');
+                        return;
+                    }
+
+                    let zoomLevel = viewportWidth / REFERENCE_WIDTH;
+                    zoomLevel = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoomLevel));
+
+                    document.documentElement.style.zoom = zoomLevel;
+
+                    const realVh = viewportHeight / zoomLevel;
+                    document.documentElement.style.setProperty('--real-vh', realVh + 'px');
+                }
+
+                applyScaling();
+
+                let resizeTimeout;
+                window.addEventListener('resize', function () {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(applyScaling, 100);
+                });
+            })();
+        </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -105,29 +140,6 @@
                 }
             }
         }
-    </script>
-
-    <script>
-        // ==========================================
-        // SMART SCALING (Safe for all devices)
-        // ==========================================
-        (function() {
-            const isWindows = navigator.platform.indexOf('Win') > -1;
-            
-            // Check pixel ratio. 
-            // 1.0 = Standard (or High-Res screen forced to 100% -> Tiny text)
-            // >1.0 = High DPI / OS Scaling Active (Already zoomed by Windows -> Normal text)
-            const pixelRatio = window.devicePixelRatio;
-
-            // Only boost size if it's Windows AND the user hasn't scaled up their OS yet.
-            if (isWindows && pixelRatio <= 1) {
-                document.documentElement.style.fontSize = '19px'; // Boost to ~120%
-            } else {
-                document.documentElement.style.fontSize = '16px'; // Standard for everyone else
-            }
-        })();
-
-        // To check in console: console.log("OS:", navigator.platform, "Ratio:", window.devicePixelRatio)
     </script>
 
     <style>
@@ -375,7 +387,7 @@
         </div>
     </nav>
 
-    <header id="home" class="relative pt-20 md:pt-24 pb-4 md:pb-12 px-6 min-h-[100dvh] h-auto flex flex-col justify-center overflow-hidden w-full">
+    <header id="home" class="relative pt-20 md:pt-24 pb-4 md:pb-12 px-6 h-auto flex flex-col justify-center overflow-hidden w-full" style="min-height: var(--real-vh, 100dvh);">
         <div class="container mx-auto grid lg:grid-cols-2 gap-2 lg:gap-8 items-center relative z-10 h-full">
             
             <div class="order-2 lg:order-1 space-y-2 md:space-y-4 text-center lg:text-left flex flex-col justify-center mt-2 lg:mt-0">
@@ -2046,10 +2058,12 @@
         counters.forEach(c => countObserver.observe(c));
 
         // Custom Cursor
+        // Custom Cursor (zoom-aware)
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+            const zoomLevel = parseFloat(document.documentElement.style.zoom) || 1;
+            cursor.style.left = (e.clientX / zoomLevel) + 'px';
+            cursor.style.top = (e.clientY / zoomLevel) + 'px';
         });
 
         // Scroll Progress & Back to Top
@@ -2257,6 +2271,80 @@
             requestAnimationFrame(animateCanvas);
         }
         animateCanvas();
+    // OPTIONAL DEBUG PANEL (Press Ctrl+Shift+D to toggle)
+    const debugDiv = document.createElement('div');
+    debugDiv.id = 'viewport-debug';
+    debugDiv.style.cssText = `
+        position: fixed;
+        bottom: 18px;
+        right: 18px;
+        background: linear-gradient(135deg, #1A1821 80%, #C5A065 100%);
+        color: #C5A065;
+        padding: 16px 22px 14px 22px;
+        border-radius: 1.5rem;
+        font-family: 'Manrope', 'Italiana', 'Dancing Script', monospace;
+        font-size: 13px;
+        z-index: 99999;
+        display: none;
+        line-height: 1.7;
+        border: 1.5px solid #C5A065;
+        box-shadow: 0 8px 32px -8px rgba(197,160,101,0.18), 0 2px 8px rgba(26,24,33,0.12);
+        backdrop-filter: blur(4px);
+        transition: box-shadow 0.3s, background 0.3s;
+        letter-spacing: 0.02em;
+        min-width: 260px;
+        max-width: 340px;
+        text-shadow: 0 1px 2px #18181844;
+    `;
+    document.body.appendChild(debugDiv);
+
+    function updateDebug() {
+        const dpr = window.devicePixelRatio;
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const zoomLevel = document.documentElement.style.zoom || '1';
+        const zoomPercent = (parseFloat(zoomLevel) * 100).toFixed(0);
+        const os = navigator.platform;
+        const browser = navigator.userAgent.split(') ')[0] + ')';
+        const orientation = (window.screen.orientation && window.screen.orientation.type) ? window.screen.orientation.type : (w > h ? 'landscape' : 'portrait');
+        const scrollY = window.scrollY || window.pageYOffset;
+            let cookiesEnabled = navigator.cookieEnabled ? 'Enabled' : 'Disabled';
+            let jsEnabled = 'Enabled'; // If this runs, JS is enabled
+            let debugHtml = `
+                <strong>📊 Viewport Debug</strong><br>
+                DPR: <span style="color:#fff">${dpr.toFixed(2)}</span><br>
+                CSS Viewport: <span style="color:#fff">${w}×${h}</span><br>
+                <strong style="color:#8DA399">Page Zoom: <span style="color:#fff">${zoomPercent}%</span></strong><br>
+                OS: <span style="color:#fff">${os}</span><br>
+                Browser: <span style="color:#fff">${browser}</span><br>
+                Orientation: <span style="color:#fff">${orientation}</span><br>
+                Scroll Y: <span style="color:#fff">${scrollY}px</span><br>
+                Cookies: <span style="color:#fff">${cookiesEnabled}</span><br>
+                JavaScript: <span style="color:#fff">${jsEnabled}</span><br>
+            `;
+            debugDiv.innerHTML = debugHtml;
+            if (navigator.getBattery) {
+                navigator.getBattery().then(battery => {
+                    const batteryInfo = `Battery: <span style="color:#fff">${(battery.level * 100).toFixed(0)}%</span> ${battery.charging ? '(Charging)' : ''}<br>`;
+                    debugDiv.innerHTML += batteryInfo;
+                    debugDiv.innerHTML += `<span style=\"color:#8DA399;font-size:9px\">Press Ctrl+Shift+D to hide</span><br>`;
+                });
+            } else {
+                debugDiv.innerHTML += `<span style=\"color:#8DA399;font-size:9px\">Press Ctrl+Shift+D to hide</span><br>`;
+            }
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+            e.preventDefault();
+            debugDiv.style.display = debugDiv.style.display === 'none' ? 'block' : 'none';
+            if (debugDiv.style.display === 'block') updateDebug();
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (debugDiv.style.display === 'block') updateDebug();
+    });
 
     </script>
 </body>
